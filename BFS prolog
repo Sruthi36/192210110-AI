@@ -1,0 +1,74 @@
+% Define the edges of the graph
+edge(a, b, 1).
+edge(a, c, 3).
+edge(b, d, 2).
+edge(b, e, 4).
+edge(c, f, 6).
+edge(c, g, 2).
+edge(d, h, 1).
+edge(e, i, 2).
+edge(f, j, 3).
+edge(g, k, 1).
+
+% Define heuristic values for the nodes
+heuristic(a, 5).
+heuristic(b, 3).
+heuristic(c, 4).
+heuristic(d, 2).
+heuristic(e, 6).
+heuristic(f, 5).
+heuristic(g, 1).
+heuristic(h, 1).
+heuristic(i, 2).
+heuristic(j, 3).
+heuristic(k, 0). % Goal node has heuristic value 0
+
+% Best First Search algorithm
+best_first_search(Start, Goal, Path) :-
+    heuristic(St% Define the edges of the graph
+edge(a, b, 1).
+edge(a, c, 3).
+edge(b, d, 2).
+edge(b, e, 4).
+edge(c, f, 6).
+edge(c, g, 2).
+edge(d, h, 1).
+edge(e, i, 2).
+edge(f, j, 3).
+edge(g, k, 1).
+
+% Define heuristic values for the nodes
+heuristic(a, 5).
+heuristic(b, 3).
+heuristic(c, 4).
+heuristic(d, 2).
+heuristic(e, 6).
+heuristic(f, 5).
+heuristic(g, 1).
+heuristic(h, 1).
+heuristic(i, 2).
+heuristic(j, 3).
+heuristic(k, 0). % Goal node has heuristic value 0
+
+% Best First Search algorithm
+best_first_search(Start, Goal, Path) :-
+    heuristic(Start, H),
+    bfs([[H, 0, Start]], Goal, [], Path).
+
+% BFS Helper
+bfs([[_, _, Goal] | _], Goal, Visited, Path) :-
+    reverse([Goal | Visited], Path).
+
+bfs([[H, Cost, Node] | Rest], Goal, Visited, Path) :-
+    findall([NewH, NewCost, Next],
+            (edge(Node, Next, StepCost),
+             \+ member(Next, Visited),
+             NewCost is Cost + StepCost,
+             heuristic(Next, NewH)),
+            Neighbors),
+    append(Rest, Neighbors, NewQueue),
+    sort(NewQueue, SortedQueue),
+    bfs(SortedQueue, Goal, [Node | Visited], Path).
+
+% Example query to find path from a to k
+% ?- best_first_search(a, k, Path).
