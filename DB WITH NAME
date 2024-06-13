@@ -1,0 +1,27 @@
+% Define the facts
+person('John Doe', date(1985, 5, 15)).
+person('Jane Smith', date(1990, 7, 23)).
+person('Alice Johnson', date(1978, 3, 10)).
+person('Bob Brown', date(2002, 11, 30)).
+
+% Rules to find a person by name
+find_person_by_name(Name, date(Year, Month, Day)) :-
+    person(Name, date(Year, Month, Day)).
+
+% Rules to find a person by year of birth
+find_person_by_year(Year, Name, date(Year, Month, Day)) :-
+    person(Name, date(Year, Month, Day)).
+
+% Rules to find a person by month of birth
+find_person_by_month(Month, Name, date(Year, Month, Day)) :-
+    person(Name, date(Year, Month, Day)).
+
+% Rules to find a person by day of birth
+find_person_by_day(Day, Name, date(Year, Month, Day)) :-
+    person(Name, date(Year, Month, Day)).
+
+% Example Queries:
+% ?- find_person_by_name('John Doe', DOB).
+% ?- find_person_by_year(1990, Name, DOB).
+% ?- find_person_by_month(7, Name, DOB).
+% ?- find_person_by_day(15, Name, DOB).
